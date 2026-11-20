@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ผลสลากกินแบ่งรัฐบาล 🍀</title>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7efe0;--card:#fffaf0;--ink:#5a4332;--mute:#9a8470;--line:#e6d3b3;--terra:#c46a43;--olive:#7d8a52;--sand:#ecd9b8;--gold:#d9a441;--rose:#d98c7a;--shadow:0 4px 0 #e2cba4;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a211a;--card:#3a2d23;--ink:#f3e6d0;--mute:#b9a287;--line:#56443388;--terra:#e08a62;--olive:#a3b06e;--sand:#4a3a2c;--gold:#e6b655;--rose:#e6a08f;--shadow:0 4px 0 #1f1812}}
+:root[data-theme="dark"]{--bg:#2a211a;--card:#3a2d23;--ink:#f3e6d0;--mute:#b9a287;--line:#56443388;--terra:#e08a62;--olive:#a3b06e;--sand:#4a3a2c;--gold:#e6b655;--rose:#e6a08f;--shadow:0 4px 0 #1f1812}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Mali","Sarabun","Noto Sans Thai",system-ui,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 48px}
+header{text-align:center;margin-bottom:18px}
+h1{font-size:1.6rem;margin:4px 0 2px;color:var(--terra)}
+.sub{color:var(--mute);font-size:.9rem;margin:0}
+.picker{background:var(--card);border-radius:22px;padding:14px;box-shadow:var(--shadow);margin-bottom:18px;border:2px solid var(--line)}
+.picker label{font-size:.85rem;color:var(--mute);display:block;margin-bottom:6px}
+select{width:100%;font:inherit;font-size:1.05rem;padding:10px 14px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chip{font:inherit;font-size:.85rem;padding:6px 12px;border-radius:999px;border:2px solid var(--line);background:var(--sand);color:var(--ink);cursor:pointer}
+.chip.on{background:var(--olive);color:#fff;border-color:var(--olive)}
+.date{text-align:center;font-weight:700;font-size:1.1rem;margin:6px 0 14px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{margin:0 0 2px;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+.meta{color:var(--mute);font-size:.82rem;margin:0 0 10px}
+.hero{background:linear-gradient(160deg,#e8a35f,#c46a43);color:#fff;border:none;text-align:center;box-shadow:0 4px 0 #a5532f}
+.hero .meta{color:#ffe9d2}
+.big{font-size:clamp(2.3rem,12vw,3.6rem);font-weight:700;letter-spacing:.14em;margin:4px 0;text-shadow:0 3px 0 #a5532f}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>.card{flex:1 1 150px;margin-bottom:0}
+.pair{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.num{background:var(--sand);border-radius:14px;padding:6px 12px;font-weight:700;font-size:1.25rem;letter-spacing:.08em;min-width:64px;text-align:center}
+.num.s{font-size:1rem;padding:5px 8px;min-width:0;letter-spacing:.05em}
+.gap{margin-top:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:6px}
+.tag{display:inline-block;background:var(--olive);color:#fff;border-radius:999px;font-size:.72rem;padding:2px 10px}
+.two{background:var(--olive);color:#fff;border:none;box-shadow:0 4px 0 #5f6b3b;text-align:center}
+.two .meta{color:#eef2dc}.two .num{background:#ffffff30;color:#fff;font-size:2rem}
+[hidden]{display:none!important}
+.tab b{display:block;font-size:1.2rem;font-weight:400}
+.lgd{display:inline-block;width:9px;height:9px;border-radius:50%;background:#fff;border:2px solid var(--ink);vertical-align:-1px}
+.lg{border-bottom:3px solid var(--ink);padding-bottom:1px}
+.ptiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;margin-top:12px}
+.ptile{font:inherit;text-align:left;padding:10px 12px;border-radius:16px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.ptile.on{background:var(--olive);border-color:var(--olive);color:#fff;box-shadow:0 3px 0 #5f6b3b}
+.ptile b{display:block;font-size:.92rem}
+.ptile .v{font-size:1.15rem;font-weight:700;margin-top:2px}
+.ptile small{display:block;opacity:.8;font-size:.74rem;line-height:1.35}
+.prow{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:12px 14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.pd{font-size:.85rem;color:var(--mute);margin-bottom:8px}
+.pn{display:flex;margin-bottom:8px}
+.dg{position:relative;display:inline-flex;align-items:center;justify-content:center;width:clamp(36px,11vw,46px);height:clamp(44px,13vw,56px);margin-right:4px;border-radius:12px;background:var(--sand);color:var(--mute);font-size:clamp(1.25rem,6vw,1.7rem)}
+.dg.rp{color:#fff;font-weight:800}
+.dg.g0{background:var(--terra)}.dg.g1{background:#6f7c45}.dg.g2{background:#b9822a}
+:root[data-theme="dark"] .dg.g1{background:#8a9a58}
+.dg.rn::after{content:"";position:absolute;left:7px;right:7px;bottom:5px;height:3px;border-radius:2px;background:currentColor;opacity:.75}
+.dg.j{margin-left:-4px;border-top-left-radius:3px;border-bottom-left-radius:3px}
+.dg.jn{border-top-right-radius:3px;border-bottom-right-radius:3px}
+.seg{display:flex;gap:8px}
+.segb,.sgb{flex:1;font:inherit;font-size:1rem;padding:10px 6px;border-radius:14px;border:2px solid var(--line);background:var(--sand);color:var(--ink);cursor:pointer}
+.segb.on,.sgb.on{background:var(--terra);border-color:var(--terra);color:#fff;box-shadow:0 3px 0 #a5532f}
+.tops{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:8px}
+.top{background:var(--sand);border-radius:16px;padding:8px 6px;text-align:center}
+.top small{display:block;font-size:.72rem;color:var(--mute)}
+.top .tn{font-size:1.9rem;font-weight:800;color:var(--terra);line-height:1.15}
+.hm{width:100%;border-collapse:separate;border-spacing:3px;text-align:center;font-size:.85rem}
+.hm th{font-weight:600;color:var(--mute);font-size:.75rem;padding:2px 0}
+.hm td{border-radius:8px;padding:6px 0;background:var(--sand)}
+.hm td.dg0{background:none;font-weight:800;color:var(--terra);font-size:1.05rem}
+.hm td.mx{font-weight:800;outline:2px solid var(--ink);outline-offset:-2px}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}
+.rk{display:grid;grid-template-columns:22px 34px 1fr 118px;gap:8px;align-items:center;margin-bottom:7px}
+.rk .rn{color:var(--mute);font-size:.8rem;text-align:right}
+.rk .rd{font-weight:800;font-size:1.2rem;text-align:center;background:var(--sand);border-radius:10px;padding:2px 0}
+.bt{position:relative;height:16px;border-radius:8px;background:var(--sand)}
+.bt i{position:absolute;left:0;top:0;bottom:0;border-radius:8px;background:var(--terra)}
+.bt u{position:absolute;top:-3px;bottom:-3px;border-left:2px dashed var(--ink);opacity:.55}
+.rk .rc{text-align:right;font-size:.85rem;line-height:1.25}
+.rk .rc small{display:block;font-size:.7rem;color:var(--mute)}
+.an{padding:14px}
+.anh{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.rkn{font-weight:800;color:var(--terra);font-size:1.3rem;min-width:34px}
+.scs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.why{font-size:.85rem}
+.why ul{margin:4px 0 10px;padding-left:18px;line-height:1.55}
+.why b{font-size:.82rem;color:var(--mute)}
+.pgh{grid-column:1/-1;font-size:.8rem;color:var(--mute);margin-top:8px;font-weight:700}
+.dg.pm::before{content:"";position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
+.pb{display:flex;flex-wrap:wrap;gap:6px}
+.bd{font-size:.75rem;padding:3px 10px;border-radius:999px;background:var(--sand);color:var(--ink)}
+.bd.u{background:#7d8a5233}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
+.tab:last-child:nth-child(odd){grid-column:1/-1}
+@media(min-width:720px){.tabs{grid-template-columns:repeat(5,1fr)}.tab:last-child:nth-child(odd){grid-column:auto}}
+.tab{font:inherit;font-size:.82rem;line-height:1.3;padding:8px 4px;border-radius:16px;border:2px solid var(--line);background:var(--sand);color:var(--ink);cursor:pointer}
+.tab.on{background:var(--terra);color:#fff;border-color:var(--terra);box-shadow:0 3px 0 #a5532f}
+#num{flex:1;min-width:0;font:inherit;font-size:1.5rem;letter-spacing:.2em;text-align:center;padding:8px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.go{font:inherit;font-size:1.05rem;font-weight:700;padding:0 22px;border:none;border-radius:14px;background:var(--olive);color:#fff;cursor:pointer;box-shadow:0 3px 0 #5f6b3b}
+.sum{text-align:center;font-weight:700;margin:4px 0 12px}
+.hit{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 12px;border-radius:14px;background:var(--sand);margin-top:6px}
+.hit.f{background:var(--terra);color:#fff;font-weight:700}
+.hit.p{opacity:.5}
+.hit small{opacity:.85}
+.empty{text-align:center;padding:26px 10px}
+footer{text-align:center;color:var(--mute);font-size:.78rem;margin-top:22px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div style="font-size:2.2rem">🍀🧺🍂</div>
+<h1>สลากกินแบ่งรัฐบาล</h1>
+<p class="sub">ดูผลรางวัลและเช็กเลขที่เคยถูก</p>
+</header>
+<div id="fresh" hidden style="text-align:center;font-size:.8rem;margin:-6px 0 14px;padding:8px 12px;border-radius:14px;background:var(--sand);color:var(--ink)"></div>
+<nav class="tabs"><button class="tab on" data-p="1"><b>📜</b>ผลรางวัลย้อนหลัง</button><button class="tab" data-p="2"><b>🔎</b>เช็คผลรางวัล 16 ปี</button><button class="tab" data-p="3"><b>🧩</b>แพทเทิร์นรางวัลที่ 1</button><button class="tab" data-p="4"><b>📊</b>สถิติแยกตามรางวัล</button><button class="tab" data-p="5"><b>🔮</b>วิเคราะห์ผลรางวัล</button></nav>
+<div id="pg1">
+<div class="picker">
+<label for="sel">เลือกงวด</label>
+<select id="sel"></select>
+<div class="chips"><button class="chip" id="prev">◀ งวดก่อนหน้า</button><button class="chip" id="next" style="margin-left:auto">งวดถัดไป ▶</button></div>
+</div>
+<div id="out"></div>
+</div>
+<div id="pg2" hidden>
+<div class="picker"><label for="num">กรอกเลขสลาก 6 หลัก</label>
+<div style="display:flex;gap:8px"><input id="num" inputmode="numeric" maxlength="6" placeholder="เช่น 645654" autocomplete="off"><button id="go" class="go">ตกลง</button></div>
+<p class="sub" id="msg" style="margin-top:8px"></p></div>
+<div id="res"></div>
+</div>
+<div id="pg3" hidden>
+<div class="picker"><div style="font-weight:700;margin-bottom:4px">🧩 แพทเทิร์นของรางวัลที่ 1</div>
+<p class="sub">เรียงจากงวดล่าสุด · เลขที่<b>ซ้ำกัน</b>จะเป็นตัวหนาและมีสี (สีเดียวกัน = เลขตัวเดียวกัน) · <span class="lg">เส้นใต้</span> = เลขเรียง · <span class="lgd"></span> จุดมุมบน = ตรงกับเลขงวดก่อนหน้า (ตำแหน่งเดียวกัน) · แตะการ์ดด้านล่างเพื่อกรอง</p>
+<div class="ptiles" id="ptiles"></div></div>
+<div id="plist"></div>
+<div style="text-align:center;margin:6px 0 4px"><button class="go" id="more" style="padding:10px 22px">ดูเพิ่ม</button></div>
+<p class="sub" style="text-align:center;margin-top:10px">ตัวเลข 6 หลักที่สุ่มขึ้นมาทั่วไปก็มีเลขซ้ำถึง ~85% อยู่แล้ว จึงเห็นแพทเทิร์นบ่อยเป็นเรื่องปกติ<br>ข้อมูลนี้เป็นสถิติย้อนหลัง ไม่ได้ช่วยทำนายงวดถัดไป</p>
+</div>
+<div id="pg4" hidden>
+<div class="picker"><div class="seg"><button class="segb on" data-v="p1">🏆 รางวัลที่ 1</button><button class="segb" data-v="l2">✨ เลขท้าย 2 ตัว</button></div>
+<label for="rng" style="margin-top:12px">ช่วงเวลา</label>
+<select id="rng"><option value="all">ทุกงวด (ตั้งแต่ปี 2553)</option><option value="10">10 ปีล่าสุด</option><option value="5">5 ปีล่าสุด</option><option value="3">3 ปีล่าสุด</option><option value="1">1 ปีล่าสุด</option></select>
+<p class="sub" id="stcover" style="margin-top:8px"></p></div>
+<div id="stout"></div>
+</div>
+<div id="pg5" hidden>
+<div class="picker"><p class="sub" style="margin:0;line-height:1.55">⚠️ <b>เพื่อความสนุกและดูสถิติเท่านั้น</b> ในทางสถิติเลขทุกตัวมีโอกาสเท่ากัน (รางวัลที่ 1 = 1 ใน 1,000,000 · เลขท้าย 2 ตัว = 1 ใน 100) คะแนนในหน้านี้บอกแค่ว่าเลขนั้นเข้ากับสถิติในอดีตแค่ไหน <b>ไม่ใช่โอกาสถูกรางวัล</b></p></div>
+<div class="picker"><div class="seg" id="a-prize"><button class="sgb on" data-v="p1">🏆 รางวัลที่ 1</button><button class="sgb" data-v="l2">✨ เลขท้าย 2 ตัว</button></div>
+<div class="seg" style="margin-top:10px"><button class="sgb" id="pre-hi" style="font-size:.9rem">🎯 คาดการณ์ตามสถิติ</button><button class="sgb" id="pre-lo" style="font-size:.9rem">🔄 แทงสวนสถิติ</button></div>
+<label style="margin-top:12px">แนวทาง Pattern (รูปแบบของเลข)</label>
+<div class="seg" id="a-pm"><button class="sgb on" data-v="hi">คล้ายสถิติ</button><button class="sgb" data-v="mid">ปานกลาง</button><button class="sgb" data-v="lo">แทงสวน</button></div>
+<label style="margin-top:12px">แนวทางตัวเลขรายหลัก (ความถี่ที่ออก)</label>
+<div class="seg" id="a-dm"><button class="sgb on" data-v="hi">ตามแนวโน้ม</button><button class="sgb" data-v="mid">ปานกลาง</button><button class="sgb" data-v="lo">แทงสวน</button></div>
+<label for="a-rng" style="margin-top:12px">ช่วงข้อมูลที่ใช้วิเคราะห์</label>
+<select id="a-rng"><option value="all">ทุกงวด (ตั้งแต่ปี 2553)</option><option value="10">10 ปีล่าสุด</option><option value="5">5 ปีล่าสุด</option></select></div>
+<div id="aout"></div>
+</div>
+<footer>ข้อมูลผลสลากกินแบ่งรัฐบาลตั้งแต่ปี 2553 ถึง 2569 (399 งวด) จากสำนักงานสลากกินแบ่งรัฐบาล (glo.or.th)<br>รวบรวมโดย <a href="https://huayreview.net/stats/ten-year-data/" target="_blank" rel="noopener" style="color:inherit">huayreview.net</a> · CC BY 4.0<br>กรุณาตรวจสอบกับสำนักงานสลากกินแบ่งรัฐบาลอีกครั้งก่อนขึ้นเงินรางวัล</footer>
+</div>
+<script src="data/draws.js"></script>
+<script>
+const S=s=>s.trim()?s.trim().split(/\s+/):[];
+const DOW_TH=["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัสบดี","วันศุกร์","วันเสาร์"];
+const RAW=(window.LOTTERY_DATA&&window.LOTTERY_DATA.draws)||[];
+if(!RAW.length){document.body.insertAdjacentHTML("afterbegin",'<p style="padding:20px;text-align:center">โหลดข้อมูลผลสลากไม่สำเร็จ (ไม่พบไฟล์ data/draws.js)</p>');throw new Error("no data")}
+const DRAWS=RAW.slice().sort((a,b)=>b.draw_date.localeCompare(a.draw_date)).map(d=>({id:d.draw_date,label:d.draw_date_th,
+ day:DOW_TH[new Date(d.draw_date+"T00:00:00Z").getUTCDay()],old:d.draw_date<"2015-09-01",p1:d.first_prize[0],
+ f3:d.front_three_digits,l3:d.last_three_digits,l2:d.last_two_digits[0],nb:d.near_first_prize,p2:d.second_prize,
+ p3:d.third_prize,p4:d.fourth_prize,p5:d.fifth_prize}));
+const $=id=>document.getElementById(id);
+const nums=(a,c="num")=>a.map(n=>`<span class="${c}">${n}</span>`).join("");
+function render(id){
+ const d=DRAWS.find(x=>x.id===id)||DRAWS[0];
+ $("sel").value=d.id;
+ try{location.hash=d.id}catch(e){}
+ const A=n=>d.old?"":` · รางวัลละ ${n} บาท`;
+ const f3=d.f3.length?`<div class="card"><h2>🔢 เลขหน้า 3 ตัว</h2><p class="meta">${d.f3.length} รางวัล${A("4,000")}</p><div class="pair">${nums(d.f3)}</div></div>`:`<div class="card"><h2>🔢 เลขหน้า 3 ตัว</h2><p class="meta">ยังไม่มีรางวัลนี้ในงวดก่อน ก.ย. 2558</p><div class="pair"><span class="num" style="opacity:.4">—</span></div></div>`;
+ $("out").innerHTML=`
+ <div class="date">🗓️ งวด${d.day}ที่ ${d.label}</div>
+ ${d.old?`<p class="sub" style="text-align:center;margin:-6px 0 12px">🌾 งวดนี้ใช้โครงสร้างรางวัลแบบเดิม (ก่อน ก.ย. 2558) · ไม่แสดงเงินรางวัล</p>`:""}
+ <div class="card hero"><h2 style="justify-content:center">🏆 รางวัลที่ 1</h2><p class="meta">1 รางวัล${A("6,000,000")}</p><div class="big">${d.p1}</div></div>
+ <div class="row">
+  ${f3}
+  <div class="card"><h2>🔢 เลขท้าย 3 ตัว</h2><p class="meta">${d.l3.length} รางวัล${A("4,000")}</p><div class="pair">${nums(d.l3)}</div></div>
+ </div>
+ <div class="card two gap"><h2 style="justify-content:center">✨ เลขท้าย 2 ตัว</h2><p class="meta">1 รางวัล${A("2,000")}</p><div class="pair">${nums([d.l2])}</div></div>
+ <div class="card"><h2>🌿 รางวัลข้างเคียงรางวัลที่ 1</h2><p class="meta">2 รางวัล${A("100,000")}</p><div class="pair">${nums(d.nb)}</div></div>
+ <div class="card"><h2>🌼 รางวัลที่ 2</h2><p class="meta">5 รางวัล${A("200,000")}</p><div class="pair">${nums(d.p2)}</div></div>
+ <div class="card"><h2>🍯 รางวัลที่ 3</h2><p class="meta">10 รางวัล${A("80,000")}</p><div class="grid">${nums(d.p3,"num s")}</div></div>
+ <div class="card"><h2>🍄 รางวัลที่ 4</h2><p class="meta">50 รางวัล${A("40,000")}</p><div class="grid">${nums(d.p4,"num s")}</div></div>
+ <div class="card"><h2>🌰 รางวัลที่ 5</h2><p class="meta">100 รางวัล${A("20,000")}</p><div class="grid">${nums(d.p5,"num s")}</div></div>`;
+}
+const yrs=[];DRAWS.forEach(d=>{const y=d.label.split(" ").pop();if(!yrs.includes(y))yrs.push(y)});
+yrs.forEach(y=>{const g=document.createElement("optgroup");g.label="พ.ศ. "+y;
+ DRAWS.filter(d=>d.label.endsWith(y)).forEach(d=>{const o=document.createElement("option");o.value=d.id;o.textContent=d.label;g.appendChild(o)});
+ $("sel").appendChild(g)});
+$("prev").onclick=()=>{const i=DRAWS.findIndex(d=>d.id===$("sel").value);if(i<DRAWS.length-1)render(DRAWS[i+1].id)};
+$("next").onclick=()=>{const i=DRAWS.findIndex(d=>d.id===$("sel").value);if(i>0)render(DRAWS[i-1].id)};
+$("sel").onchange=e=>render(e.target.value);
+let h="";try{h=location.hash.slice(1)}catch(e){}
+function showPage(p){
+ document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.p===String(p)));
+ $("pg1").hidden=p!==1;$("pg2").hidden=p!==2;$("pg3").hidden=p!==3;$("pg4").hidden=p!==4;$("pg5").hidden=p!==5;
+ if(p===2){try{location.hash="check"}catch(e){}}
+ if(p===3){try{location.hash="pattern"}catch(e){}}
+ if(p===4){try{location.hash="stats"}catch(e){}}
+ if(p===5){try{location.hash="analyze"}catch(e){}if(!window.__a5){window.__a5=1;renderAnalysis()}}
+}
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{const p=+t.dataset.p;if(p===1)render($("sel").value);showPage(p)});
+const FULL=[["p1","รางวัลที่ 1",6000000],["nb","รางวัลข้างเคียงรางวัลที่ 1",100000],["p2","รางวัลที่ 2",200000],["p3","รางวัลที่ 3",80000],["p4","รางวัลที่ 4",40000],["p5","รางวัลที่ 5",20000]];
+const fmt=n=>n.toLocaleString("th-TH");
+function check(){
+ const n=$("num").value.replace(/\D/g,"");
+ $("num").value=n;
+ if(n.length!==6){$("msg").textContent="กรุณากรอกเลข 6 หลักให้ครบนะ 🙂";$("res").innerHTML="";return}
+ $("msg").textContent="";
+ const list=[...DRAWS].sort((a,b)=>b.id.localeCompare(a.id));
+ let big=0,small=0,money=0,oldFull=0,html="";
+ list.forEach(d=>{
+  const hits=[];
+  FULL.forEach(([k,t,m])=>{const v=d[k];if(Array.isArray(v)?v.includes(n):v===n)hits.push({t,m:d.old?null:m,f:1})});
+  if(d.f3.includes(n.slice(0,3)))hits.push({t:"เลขหน้า 3 ตัว",m:4000});
+  if(d.l3.includes(n.slice(3)))hits.push({t:"เลขท้าย 3 ตัว",m:d.old?null:4000});
+  if(d.l2===n.slice(4))hits.push({t:"เลขท้าย 2 ตัว",m:d.old?null:2000});
+  if(!hits.length)return;
+  hits.forEach(h=>{if(h.f){big++;if(h.m)money+=h.m;else oldFull++}else small++});
+  html+=`<div class="card"><h2>🗓️ งวด${d.day}ที่ ${d.label}</h2>${hits.map(h=>`<div class="hit ${h.f?"f":"p"}"><span>${h.f?"🎉":"🍃"} ${h.t}</span><small>${h.m?fmt(h.m)+" บาท":"ยุคเดิม · ไม่ระบุยอด"}</small></div>`).join("")}</div>`;
+ });
+ const oldest=list[list.length-1].label,newest=list[0].label;
+ const cover=`<p class="sub" style="text-align:center;margin-bottom:12px">ตรวจจากข้อมูล ${list.length} งวด (${oldest} – ${newest})</p>`;
+ const sum=(big||small)?`<div class="sum">เลข ${n} · ถูกรางวัลเต็ม ${big} ครั้ง${big?(money?` (รวม ${fmt(money)} บาท${oldFull?` · ไม่รวม ${oldFull} ครั้งก่อน ก.ย. 2558`:""})`:` (งวดก่อน ก.ย. 2558 ไม่ระบุยอดเงิน)`):""} · ถูกบางส่วน ${small} ครั้ง</div>`:"";
+ $("res").innerHTML=cover+sum+(html||`<div class="card empty"><div style="font-size:2.4rem">🌱</div>เลข ${n} ยังไม่เคยถูกรางวัลในงวดที่มีข้อมูล<br><span class="sub">ลองเลขอื่นดูนะ</span></div>`);
+}
+$("go").onclick=check;
+$("num").addEventListener("keydown",e=>{if(e.key==="Enter")check()});
+/* ---------- page 3: first-prize patterns ---------- */
+const runsOf=s=>{const out=[];let i=0;while(i<4){const d=+s[i+1]-+s[i];if((d===1||d===-1)&&+s[i+2]-+s[i+1]===d){let j=i+2;while(j<5&&+s[j+1]-+s[j]===d)j++;out.push([i,j]);i=j}else i++}return out};
+const cnts=s=>{const c={};[...s].forEach(x=>c[x]=(c[x]||0)+1);return c};
+const PREV_OLDEST="";
+const sumD=s=>[...s].reduce((a,x)=>a+ +x,0);
+const PAT=[
+ {g:"รูปแบบของเลข",k:"rep",t:"มีเลขซ้ำ",e:84.88,f:s=>new Set(s).size<6},
+ {k:"adj",t:"เลขซ้ำติดกัน",e:40.95,f:s=>/(\d)\1/.test(s)},
+ {k:"trip",t:"ซ้ำ 3 ตัวขึ้นไป",e:15.76,f:s=>Math.max(...Object.values(cnts(s)))>=3},
+ {k:"uniq",t:"ไม่ซ้ำเลย",e:15.12,f:s=>new Set(s).size===6},
+ {k:"end2",t:"ท้าย 2 ตัวซ้ำ",e:10,f:s=>s[4]===s[5]},
+ {k:"lead0",t:"ขึ้นต้นด้วย 0",e:10,f:s=>s[0]==="0"},
+ {k:"run",t:"เลขเรียง 3 ตัว+",e:5.93,f:s=>runsOf(s).length>0},
+ {k:"par",t:"คู่ล้วน / คี่ล้วน",e:3.12,f:s=>[...s].every(x=>x%2===0)||[...s].every(x=>x%2===1)},
+ {k:"alt",t:"คู่คี่สลับกันตลอด",e:3.12,f:s=>[...s].every((x,i)=>i===0||(x-s[i-1])%2!==0)},
+ {k:"hilo",t:"สูงล้วน / ต่ำล้วน",e:3.12,f:s=>[...s].every(x=>x>=5)||[...s].every(x=>x<5)},
+ {k:"sym",t:"เลขสมมาตร",e:0.1,f:s=>s===[...s].reverse().join("")},
+ {k:"half",t:"หน้า 3 = ท้าย 3",e:0.1,f:s=>s.slice(0,3)===s.slice(3)},
+ {g:"ผลรวมของตัวเลข",k:"sum30",t:"ผลรวม > 30",e:31.35,f:s=>sumD(s)>30},
+ {k:"sum15",t:"ผลรวม < 15",e:3.75,f:s=>sumD(s)<15},
+ {g:"เทียบกับงวดก่อนหน้า / งวดเดียวกัน",k:"pp",t:"ตรงงวดก่อน ตำแหน่งเดียวกัน",e:46.86,f:(s,pv)=>[...s].some((x,i)=>x===pv[i])},
+ {k:"pl2",t:"ท้าย 2 ตัวงวดก่อน โผล่ในงวดนี้",e:4.9,f:(s,pv)=>pv.length===6&&s.includes(pv.slice(4))},
+ {k:"sl2",t:"ตรงเลขท้าย 2 ตัวของงวดเดียวกัน",e:1,f:(s,pv,d)=>s.slice(4)===d.l2}
+];
+/* ---------- page 4: per-prize digit statistics ---------- */
+const POS={p1:["แสน","หมื่น","พัน","ร้อย","สิบ","หน่วย"],l2:["สิบ","หน่วย"]};
+let st={prize:"p1",range:"all",pos:0};
+function agoTxt(i){return i<0?"ไม่เคยออก":i===0?"งวดล่าสุด":i+" งวดก่อน"}
+function renderStats(){
+ const key=st.prize,names=POS[key],L=names.length;
+ if(st.pos>=L)st.pos=0;
+ let list=DRAWS;
+ if(st.range!=="all"){const cut=new Date(DRAWS[0].id);cut.setFullYear(cut.getFullYear()-(+st.range));const cs=cut.toISOString().slice(0,10);list=DRAWS.filter(d=>d.id>cs)}
+ const N=list.length,exp=N/10;
+ const C=names.map(()=>Array(10).fill(0)),LA=names.map(()=>Array(10).fill(-1));
+ list.forEach((d,i)=>{const v=d[key];for(let p=0;p<L;p++){const g=+v[p];C[p][g]++;if(LA[p][g]<0)LA[p][g]=i}});
+ $("stcover").textContent=`นับจาก ${N} งวด (${list[N-1].label} – ${list[0].label})`;
+ document.querySelectorAll(".segb").forEach(b=>b.classList.toggle("on",b.dataset.v===key));
+ const mxs=C.map(c=>Math.max(...c)),mns=C.map(c=>Math.min(...c));
+ const tops=names.map((n,p)=>{const t=[0,1,2,3,4,5,6,7,8,9].filter(g=>C[p][g]===mxs[p]);return `<div class="top"><small>หลัก${n}</small><div class="tn">${t.join("/")}</div><small>${mxs[p]} ครั้ง · ${(mxs[p]/N*100).toFixed(1)}%</small></div>`}).join("");
+ let hm=`<table class="hm"><tr><th></th>${names.map(n=>`<th>${n}</th>`).join("")}</tr>`;
+ for(let g=0;g<10;g++){hm+=`<tr><td class="dg0">${g}</td>`+names.map((n,p)=>{const c=C[p][g],r=mxs[p]===mns[p]?0:(c-mns[p])/(mxs[p]-mns[p]),a=Math.round(12+r*78);return `<td class="${c===mxs[p]?"mx":""}" style="background:color-mix(in srgb,var(--terra) ${a}%,var(--card));color:${a>52?"#fff":"inherit"}">${c}</td>`}).join("")+`</tr>`}
+ hm+=`</table>`;
+ const p=st.pos,order=[0,1,2,3,4,5,6,7,8,9].sort((a,b)=>C[p][b]-C[p][a]||a-b),mx=mxs[p];
+ const det=order.map((g,i)=>`<div class="rk"><span class="rn">${i+1}</span><span class="rd">${g}</span><div class="bt"><i style="width:${mx?C[p][g]/mx*100:0}%"></i><u style="left:${mx?Math.min(exp/mx,1)*100:0}%"></u></div><span class="rc"><b>${C[p][g]} ครั้ง</b><small>${(C[p][g]/N*100).toFixed(1)}% · ล่าสุด ${agoTxt(LA[p][g])}</small></span></div>`).join("");
+ let extra="";
+ if(key==="l2"){const m={};list.forEach(d=>m[d.l2]=(m[d.l2]||0)+1);const t=Object.entries(m).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).slice(0,10);
+  extra=`<div class="card"><h2>🔢 เลขท้าย 2 ตัวที่ออกบ่อยที่สุด 10 อันดับ</h2><p class="meta">จาก 100 คู่ที่เป็นไปได้ · ค่าเฉลี่ยจากการสุ่ม ${(N/100).toFixed(1)} ครั้งต่อคู่</p><div class="pair">${t.map(([k,v])=>`<span class="num">${k}<small style="font-size:.7rem;font-weight:400"> ×${v}</small></span>`).join("")}</div></div>`}
+ $("stout").innerHTML=`<div class="card"><h2>🌟 ออกบ่อยที่สุดในแต่ละหลัก</h2><p class="meta">${key==="p1"?"รางวัลที่ 1":"เลขท้าย 2 ตัว"} · ${N} งวด</p><div class="tops">${tops}</div></div>
+ <div class="card"><h2>🗺️ ตารางความถี่ ทุกหลัก</h2><p class="meta">จำนวนครั้งที่แต่ละตัวเลขออกในแต่ละหลัก · สีเข้ม = ออกบ่อย · กรอบดำ = บ่อยสุดของหลักนั้น</p>${hm}</div>
+ <div class="card"><h2>📋 จัดอันดับรายหลัก</h2><div class="pills">${names.map((n,i)=>`<button class="chip${i===p?" on":""}" data-p="${i}">หลัก${n}</button>`).join("")}</div>${det}<p class="meta" style="margin:8px 0 0"><span style="border-left:2px dashed var(--ink);opacity:.6;margin-right:5px"></span>เส้นประ = ค่าที่คาดจากการสุ่ม (${exp.toFixed(1)} ครั้ง หรือ 10%)</p></div>
+ ${extra}
+ <p class="sub" style="text-align:center">ผลออกแบบสุ่ม ตัวเลขที่ออกบ่อยในอดีตไม่ได้แปลว่าจะออกอีก<br>และตัวที่ไม่ออกมานานก็ไม่ได้แปลว่าใกล้ออก</p>`;
+ $("stout").querySelectorAll(".pills .chip").forEach(b=>b.onclick=()=>{st.pos=+b.dataset.p;renderStats()});
+}
+document.querySelectorAll(".segb").forEach(b=>b.onclick=()=>{st.prize=b.dataset.v;st.pos=0;renderStats()});
+$("rng").onchange=e=>{st.range=e.target.value;renderStats()};
+renderStats();
+const P3=DRAWS.map((d,i)=>{const pv=i<DRAWS.length-1?DRAWS[i+1].p1:PREV_OLDEST;return {d,s:d.p1,pv,m:PAT.filter(p=>p.f(d.p1,pv,d)).map(p=>p.k)}});
+let pfil="all",pshow=30;
+function digitsHTML(s,pv){
+ const c=cnts(s),order=[],rn=new Set();
+ [...s].forEach(x=>{if(c[x]>1&&!order.includes(x))order.push(x)});
+ runsOf(s).forEach(([a,b])=>{for(let i=a;i<=b;i++)rn.add(i)});
+ return [...s].map((x,i)=>{const r=c[x]>1;
+  return `<span class="dg${r?" rp g"+Math.min(order.indexOf(x),2):""}${rn.has(i)?" rn":""}${i>0&&s[i-1]===x?" j":""}${i<5&&s[i+1]===x?" jn":""}${x===pv[i]?" pm":""}">${x}</span>`}).join("");
+}
+function badgesHTML(s,m,pv,d){
+ const c=cnts(s),b=[],t=sumD(s);
+ b.push(`<span class="bd${t>30?" u":""}">ผลรวม ${t}</span>`);
+ if(m.includes("uniq"))b.push(`<span class="bd u">ไม่ซ้ำเลย</span>`);
+ const reps=Object.entries(c).filter(([,n])=>n>1).map(([x,n])=>`${x} ×${n}`);
+ if(reps.length)b.push(`<span class="bd">ซ้ำ ${reps.join(" · ")}</span>`);
+ const ad=[...new Set((s.match(/(\d)\1+/g)||[]))];
+ if(ad.length)b.push(`<span class="bd">ติดกัน ${ad.join(", ")}</span>`);
+ runsOf(s).forEach(([a,z])=>b.push(`<span class="bd">เรียง ${s.slice(a,z+1)}</span>`));
+ if(m.includes("par"))b.push(`<span class="bd">${+s[0]%2?"คี่":"คู่"}ล้วน</span>`);
+ if(m.includes("alt"))b.push(`<span class="bd">คู่คี่สลับกัน</span>`);
+ if(m.includes("hilo"))b.push(`<span class="bd">${+s[0]>=5?"สูง":"ต่ำ"}ล้วน</span>`);
+ if(m.includes("sym"))b.push(`<span class="bd">สมมาตร</span>`);
+ if(m.includes("half"))b.push(`<span class="bd">หน้า = ท้าย</span>`);
+ if(m.includes("end2"))b.push(`<span class="bd">ท้ายซ้ำ ${s.slice(4)}</span>`);
+ if(m.includes("lead0"))b.push(`<span class="bd">ขึ้นต้น 0</span>`);
+ const pos=[...s].map((x,i)=>x===pv[i]?i+1:0).filter(Boolean);
+ if(pos.length)b.push(`<span class="bd">ตรงงวดก่อน ตำแหน่ง ${pos.join(", ")}</span>`);
+ if(m.includes("pl2"))b.push(`<span class="bd">มีท้าย 2 ตัวงวดก่อน (${pv.slice(4)})</span>`);
+ if(m.includes("sl2"))b.push(`<span class="bd">ตรงเลขท้าย 2 ตัวงวดนี้ (${d.l2})</span>`);
+ return b.join("");
+}
+const shortDate=l=>l.replace("มกราคม","ม.ค.").replace("กุมภาพันธ์","ก.พ.").replace("มีนาคม","มี.ค.").replace("เมษายน","เม.ย.").replace("พฤษภาคม","พ.ค.").replace("มิถุนายน","มิ.ย.").replace("กรกฎาคม","ก.ค.").replace("สิงหาคม","ส.ค.").replace("กันยายน","ก.ย.").replace("ตุลาคม","ต.ค.").replace("พฤศจิกายน","พ.ย.").replace("ธันวาคม","ธ.ค.");
+function renderP3(){
+ const N=P3.length;
+ const tile=(k,t,n,sub)=>`<button class="ptile${pfil===k?" on":""}" data-k="${k}"><b>${t}</b><div class="v">${n}<span style="font-size:.78rem;font-weight:400"> งวด</span></div><small>${sub}</small></button>`;
+ $("ptiles").innerHTML=tile("all","ทุกงวด",N,`${DRAWS[N-1].label.split(" ").pop()}–${DRAWS[0].label.split(" ").pop()}`)+
+  PAT.map(p=>{const n=P3.filter(x=>x.m.includes(p.k)).length;const den=(p.k==="pp"||p.k==="pl2")?N-1:N;return (p.g?`<div class="pgh">${p.g}</div>`:"")+tile(p.k,p.t,n,`${(n/den*100).toFixed(1)}% · สุ่มคาด ${p.e<1?p.e:p.e.toFixed(1)}%`)}).join("");
+ $("ptiles").querySelectorAll(".ptile").forEach(b=>b.onclick=()=>{pfil=b.dataset.k;pshow=30;renderP3();$("plist").scrollIntoView({block:"start",behavior:"smooth"})});
+ const rows=P3.filter(x=>pfil==="all"||x.m.includes(pfil));
+ $("plist").innerHTML=rows.slice(0,pshow).map(x=>`<div class="prow"><div class="pd">🗓️ ${x.d.day}ที่ ${shortDate(x.d.label)}</div><div class="pn">${digitsHTML(x.s,x.pv)}</div><div class="pb">${badgesHTML(x.s,x.m,x.pv,x.d)}</div></div>`).join("")||`<div class="card empty"><div style="font-size:2.4rem">🌱</div>ยังไม่เคยเกิดแพทเทิร์นนี้ใน ${N} งวดที่มีข้อมูล</div>`;
+ $("more").hidden=rows.length<=pshow;
+ $("more").textContent=`ดูเพิ่ม (เหลืออีก ${rows.length-pshow} งวด)`;
+}
+$("more").onclick=()=>{pshow+=40;renderP3()};
+renderP3();
+/* ---------- page 5: analysis ---------- */
+const TH_M=["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+const DN=["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัสบดี","วันศุกร์","วันเสาร์"];
+function nextDrawLabel(){const [y,m,dd]=DRAWS[0].id.split("-").map(Number);let ny=y,nm=m,nd=16;if(dd>=16){nd=1;nm++;if(nm>12){nm=1;ny++}}
+ const dt=new Date(Date.UTC(ny,nm-1,nd));return `งวด${DN[dt.getUTCDay()]}ที่ ${nd} ${TH_M[nm-1]} ${ny+543}`}
+const sc=(z,m)=>{const p=1/(1+Math.exp(-1.702*z));return m==="hi"?p:m==="lo"?1-p:1-Math.abs(2*p-1)};
+const hx=(n,seed)=>{let h=Math.imul(n+1,2654435761)^seed;h=Math.imul(h^(h>>>15),2246822519);h^=h>>>13;return (h>>>0)/4294967296};
+const seedOf=id=>(+id.replace(/-/g,""))|0;
+function histIdx(range){const idx=[];let cs="";if(range!=="all"){const c=new Date(DRAWS[0].id);c.setFullYear(c.getFullYear()-(+range));cs=c.toISOString().slice(0,10)}
+ for(let i=0;i<DRAWS.length-1;i++){if(range==="all"||DRAWS[i].id>cs)idx.push(i)}return idx}
+const P1F=PAT.filter(p=>p.k!=="sl2");
+const MC={};
+function p1Model(range){
+ if(MC["p1"+range])return MC["p1"+range];
+ const idx=histIdx(range),N=idx.length;
+ const Cd=Array.from({length:6},()=>new Array(10).fill(0));
+ const cnt=new Array(P1F.length).fill(0);
+ idx.forEach(i=>{const s=DRAWS[i].p1,pv=DRAWS[i+1].p1;for(let p=0;p<6;p++)Cd[p][+s[p]]++;P1F.forEach((f,j)=>{if(f.f(s,pv,null))cnt[j]++})});
+ const sdv=Math.sqrt(N*.09),Z=Cd.map(r=>r.map(c=>(c-N/10)/sdv));
+ const r=cnt.map(c=>(c+1)/(N+2)),l1=r.map(Math.log),l0=r.map(v=>Math.log(1-v));
+ const base=l0.reduce((a,b)=>a+b,0),dl=l1.map((v,j)=>v-l0[j]);
+ const pvs=DRAWS[0].p1,pd=[...pvs].map(Number);
+ const L=new Float32Array(1e6),D=new Float32Array(1e6);
+ const d=new Int8Array(6),cn=new Int8Array(10);
+ let sL=0,qL=0,sD=0,qD=0;
+ for(let n=0;n<1e6;n++){
+  let t=n;for(let i=5;i>=0;i--){const q=t%10;d[i]=q;t=(t-q)/10}
+  cn.fill(0);let mx=0,dist=0,sum=0,ev=0,hi=0;
+  for(let i=0;i<6;i++){const v=d[i];if(++cn[v]===1)dist++;if(cn[v]>mx)mx=cn[v];sum+=v;if((v&1)===0)ev++;if(v>=5)hi++}
+  let adj=false,run=false,alt=true,pp=false,pl=false;
+  for(let i=0;i<5;i++){if(d[i]===d[i+1])adj=true;if(((d[i]-d[i+1])&1)===0)alt=false;
+   if(i<4){const a=d[i+1]-d[i];if((a===1||a===-1)&&d[i+2]-d[i+1]===a)run=true}}
+  for(let i=0;i<6;i++)if(d[i]===pd[i])pp=true;
+  for(let i=0;i<5;i++)if(d[i]===pd[4]&&d[i+1]===pd[5]&&pd.length===6)pl=true;
+  let v=base;
+  if(dist<6)v+=dl[0];if(adj)v+=dl[1];if(mx>=3)v+=dl[2];if(dist===6)v+=dl[3];if(d[4]===d[5])v+=dl[4];if(d[0]===0)v+=dl[5];
+  if(run)v+=dl[6];if(ev===0||ev===6)v+=dl[7];if(alt)v+=dl[8];if(hi===0||hi===6)v+=dl[9];
+  if(d[0]===d[5]&&d[1]===d[4]&&d[2]===d[3])v+=dl[10];if(d[0]===d[3]&&d[1]===d[4]&&d[2]===d[5])v+=dl[11];
+  if(sum>30)v+=dl[12];if(sum<15)v+=dl[13];if(pp)v+=dl[14];if(pl)v+=dl[15];
+  const dg=(Z[0][d[0]]+Z[1][d[1]]+Z[2][d[2]]+Z[3][d[3]]+Z[4][d[4]]+Z[5][d[5]])/6;
+  L[n]=v;D[n]=dg;sL+=v;qL+=v*v;sD+=dg;qD+=dg*dg}
+ const mL=sL/1e6,mD=sD/1e6;
+ return MC["p1"+range]={N,Cd,Z,r,L,D,mL,sL:Math.sqrt(qL/1e6-mL*mL),mD,sD:Math.sqrt(qD/1e6-mD*mD)};
+}
+function p1Top(m,pm,dm){
+ const seed=seedOf(DRAWS[0].id),top=[];
+ for(let n=0;n<1e6;n++){
+  const a=sc((m.L[n]-m.mL)/m.sL,pm),b=sc((m.D[n]-m.mD)/m.sD,dm),v=(a+b)/2+hx(n,seed)*1e-7;
+  if(top.length===5&&v<=top[4].v)continue;
+  top.push({n,v});top.sort((x,y)=>y.v-x.v);if(top.length>5)top.pop()}
+ return top.map(x=>x.n);
+}
+const L2F=[
+ {k:"dbl",t:"เลขคู่ซ้ำ (เช่น 55)",f:s=>s[0]===s[1]},
+ {k:"cons",t:"เลขติดกัน (เช่น 45 หรือ 54)",f:s=>Math.abs(s[0]-s[1])===1},
+ {k:"ee",t:"คู่-คู่",f:s=>s[0]%2===0&&s[1]%2===0},
+ {k:"oo",t:"คี่-คี่",f:s=>s[0]%2===1&&s[1]%2===1},
+ {k:"eo",t:"หลักสิบคู่ หลักหน่วยคี่",f:s=>s[0]%2===0&&s[1]%2===1},
+ {k:"oe",t:"หลักสิบคี่ หลักหน่วยคู่",f:s=>s[0]%2===1&&s[1]%2===0},
+ {k:"hh",t:"สูงทั้งคู่ (5–9)",f:s=>s[0]>=5&&s[1]>=5},
+ {k:"ll",t:"ต่ำทั้งคู่ (0–4)",f:s=>s[0]<5&&s[1]<5},
+ {k:"s10",t:"ผลรวมตั้งแต่ 10",f:s=>+s[0]+ +s[1]>=10},
+ {k:"z0",t:"ขึ้นต้นด้วย 0",f:s=>s[0]==="0"},
+ {k:"pt",t:"หลักสิบตรงงวดก่อน",f:(s,c)=>s[0]===c.pv2[0]},
+ {k:"pu",t:"หลักหน่วยตรงงวดก่อน",f:(s,c)=>s[1]===c.pv2[1]},
+ {k:"rv",t:"เป็นเลขกลับของงวดก่อน",f:(s,c)=>c.pv2[0]!==c.pv2[1]&&s===c.pv2[1]+c.pv2[0]},
+ {k:"sm",t:"ซ้ำกับงวดก่อน",f:(s,c)=>s===c.pv2},
+ {k:"ip",t:"ปรากฏในรางวัลที่ 1 งวดก่อน",f:(s,c)=>c.pp1.includes(s)}
+];
+function l2Model(idxs){
+ const N=idxs.length,C=[new Array(10).fill(0),new Array(10).fill(0)],PC={},cnt=new Array(L2F.length).fill(0);
+ idxs.forEach(i=>{const s=DRAWS[i].l2,ctx={pv2:DRAWS[i+1].l2,pp1:DRAWS[i+1].p1};C[0][+s[0]]++;C[1][+s[1]]++;PC[s]=(PC[s]||0)+1;L2F.forEach((f,j)=>{if(f.f(s,ctx))cnt[j]++})});
+ return {N,C,PC,r:cnt.map(c=>(c+1)/(N+2))};
+}
+function l2Rank(m,ctx,pm,dm){
+ const sd1=Math.sqrt(m.N*.09),sd2=Math.sqrt(m.N*.0099),rows=[];
+ for(let n=0;n<100;n++){const s=String(n).padStart(2,"0");
+  const z0=(m.C[0][+s[0]]-m.N/10)/sd1,z1=(m.C[1][+s[1]]-m.N/10)/sd1,zp=((m.PC[s]||0)-m.N/100)/sd2;
+  let L=0;const bits=L2F.map((f,j)=>{const b=!!f.f(s,ctx);L+=Math.log(b?m.r[j]:1-m.r[j]);return b});
+  rows.push({s,D:(z0+z1+zp)/3,L,bits,z:[z0,z1],zp})}
+ const stat=k=>{const mu=rows.reduce((a,x)=>a+x[k],0)/100,sd=Math.sqrt(rows.reduce((a,x)=>a+(x[k]-mu)**2,0)/100)||1;return [mu,sd]};
+ const [mL,sL]=stat("L"),[mD,sD]=stat("D");
+ rows.forEach(x=>{x.sP=sc((x.L-mL)/sL,pm);x.sN=sc((x.D-mD)/sD,dm);x.v=(x.sP+x.sN)/2+hx(+x.s,ctx.seed)*1e-7});
+ return rows.sort((a,b)=>b.v-a.v);
+}
+function l2Backtest(pm,dm){
+ const T=DRAWS.length-60;let hits=0,rs=0;
+ for(let t=0;t<T;t++){const idxs=[];for(let i=t+1;i<DRAWS.length-1;i++)idxs.push(i);
+  const rows=l2Rank(l2Model(idxs),{pv2:DRAWS[t+1].l2,pp1:DRAWS[t+1].p1,seed:seedOf(DRAWS[t].id)},pm,dm);
+  const rk=rows.findIndex(x=>x.s===DRAWS[t].l2)+1;rs+=rk;if(rk<=5)hits++}
+ return {T,hits,avg:rs/T};
+}
+const A5={prize:"p1",pm:"hi",dm:"hi",range:"all"};
+const MODE_T={hi:"ตามแนวโน้มสถิติ",mid:"ปานกลาง",lo:"แทงสวน"};
+const pickReasons=(items,mode,n)=>{const a=[...items];
+ if(mode==="hi")a.sort((x,y)=>y.q-x.q);else if(mode==="lo")a.sort((x,y)=>x.q-y.q);else a.sort((x,y)=>Math.abs(x.q)-Math.abs(y.q));return a.slice(0,n)};
+function patReasons(bits,r,names,mode,n){
+ const ord=a=>{a=[...a];if(mode==="hi")a.sort((x,y)=>y.q-x.q);else if(mode==="lo")a.sort((x,y)=>x.q-y.q);else a.sort((x,y)=>Math.abs(x.q-.5)-Math.abs(y.q-.5));return a};
+ const yes=[],no=[];
+ bits.forEach((b,j)=>{if(b)yes.push({q:r[j],text:`✓ ${names[j]} — เจอใน ${(r[j]*100).toFixed(0)}% ของงวดที่ผ่านมา`});
+  else if(r[j]>=.08)no.push({q:1-r[j],text:`✗ ไม่ใช่ “${names[j]}” — ${((1-r[j])*100).toFixed(0)}% ของงวดก็ไม่ใช่`})});
+ return [...ord(yes),...ord(no)].slice(0,n).map(x=>x.text);
+}
+const rankIn=(arr,g)=>1+arr.filter(c=>c>arr[g]).length;
+function digReasons(s,C,N,names,mode,n,extra){
+ const it=[...s].map((ch,p)=>{const g=+ch,c=C[p][g],z=(c-N/10)/Math.sqrt(N*.09);
+  return {q:z,text:`หลัก${names[p]} = ${g} — ออกบ่อยอันดับ ${rankIn(C[p],g)} จาก 10 (${c} ครั้ง, ${(c/N*100).toFixed(1)}%)`}});
+ if(extra)it.push(extra);
+ return pickReasons(it,mode,n).map(x=>x.text);
+}
+const liHTML=a=>a.map(t=>`<li>${t}</li>`).join("");
+function cardHTML(i,tiles,badges,sP,sN,rDig,rPat){
+ return `<div class="card an"><div class="anh"><span class="rkn">#${i+1}</span><div class="pn" style="margin:0">${tiles}</div></div>
+ <div class="pb" style="margin-bottom:8px">${badges}</div>
+ <div class="scs"><span class="bd u">คะแนน pattern ${Math.round(sP*100)}</span><span class="bd u">คะแนนตัวเลข ${Math.round(sN*100)}</span><span class="bd">รวม ${Math.round((sP+sN)*50)}</span></div>
+ <div class="why"><b>🔢 เหตุผลด้านตัวเลขรายหลัก</b><ul>${liHTML(rDig)}</ul><b>🧩 เหตุผลด้าน pattern</b><ul>${liHTML(rPat)}</ul></div></div>`;
+}
+let ART=0;
+function renderAnalysis(){
+ const a=A5,out=$("aout"),my=++ART;
+ document.querySelectorAll("#a-prize .sgb").forEach(b=>b.classList.toggle("on",b.dataset.v===a.prize));
+ document.querySelectorAll("#a-pm .sgb").forEach(b=>b.classList.toggle("on",b.dataset.v===a.pm));
+ document.querySelectorAll("#a-dm .sgb").forEach(b=>b.classList.toggle("on",b.dataset.v===a.dm));
+ const head=`<div class="card"><h2>🔮 ${a.prize==="p1"?"รางวัลที่ 1":"เลขท้าย 2 ตัว"} · ${nextDrawLabel()}</h2><p class="meta">Pattern: ${a.pm==="hi"?"คล้ายสถิติ":MODE_T[a.pm]} · ตัวเลข: ${MODE_T[a.dm]} · 5 อันดับแรก (อิงข้อมูลถึงงวด ${DRAWS[0].label})</p></div>`;
+ if(a.prize==="l2"){
+  const idx=histIdx(a.range),m=l2Model(idx);
+  const ctx={pv2:DRAWS[0].l2,pp1:DRAWS[0].p1,seed:seedOf(DRAWS[0].id)};
+  const rows=l2Rank(m,ctx,a.pm,a.dm).slice(0,5);
+  const cards=rows.map((x,i)=>{
+   const pc=m.PC[x.s]||0;
+   const ex={q:x.zp,text:`คู่ ${x.s} ออกมาแล้ว ${pc} ครั้งจาก ${m.N} งวด (คาดจากการสุ่ม ${(m.N/100).toFixed(1)})`};
+   const tiles=[...x.s].map((ch,p)=>`<span class="dg rp g0${ch===ctx.pv2[p]?" pm":""}">${ch}</span>`).join("");
+   const bd=L2F.map((f,j)=>x.bits[j]?`<span class="bd">${f.t}</span>`:"").join("")||`<span class="bd">ไม่มี pattern เด่น</span>`;
+   return cardHTML(i,tiles,bd,x.sP,x.sN,digReasons(x.s,m.C,m.N,POS.l2,a.dm,3,ex),patReasons(x.bits,m.r,L2F.map(f=>f.t),a.pm,3));
+  }).join("");
+  out.innerHTML=head+cards+`<div class="card"><h2>🧪 ทดสอบย้อนหลังกับเลขท้าย 2 ตัว</h2><p class="meta" id="bt">กำลังคำนวณ…</p></div>`;
+  setTimeout(()=>{if(my!==ART)return;const b=l2Backtest(a.pm,a.dm);const exp=b.T*.05;
+   $("bt").innerHTML=`ถ้าใช้วิธีและโหมดนี้ทำนายล่วงหน้าทุกงวดใน ${b.T} งวดล่าสุด (ใช้เฉพาะข้อมูลก่อนงวดนั้น) เลขที่ออกจริงติด 5 อันดับแรก <b>${b.hits} งวด</b> (การเดาสุ่มคาดว่า ~${exp.toFixed(0)} งวด) · อันดับเฉลี่ยของเลขที่ออกจริง <b>${b.avg.toFixed(1)}</b> จาก 100 (การเดาสุ่มคาดว่า ~50.5)`},20);
+  return;
+ }
+ out.innerHTML=head+`<div class="card"><p class="meta" id="ld" style="margin:0">กำลังประมวลผลเลข 1,000,000 ชุด… (ครั้งแรกอาจใช้เวลาสองสามวินาที)</p></div>`;
+ setTimeout(()=>{
+  if(my!==ART)return;
+  const m=p1Model(a.range),top=p1Top(m,a.pm,a.dm),pv=DRAWS[0].p1;
+  const names=P1F.map(p=>p.t);
+  const cards=top.map((n,i)=>{
+   const s=String(n).padStart(6,"0");
+   const bits=P1F.map(p=>!!p.f(s,pv,null)),keys=P1F.filter((p,j)=>bits[j]).map(p=>p.k);
+   const sP=sc((m.L[n]-m.mL)/m.sL,a.pm),sN=sc((m.D[n]-m.mD)/m.sD,a.dm);
+   return cardHTML(i,digitsHTML(s,pv),badgesHTML(s,keys,pv,{l2:""}),sP,sN,digReasons(s,m.Cd,m.N,POS.p1,a.dm,3),patReasons(bits,m.r,names,a.pm,3));
+  }).join("");
+  if(my===ART)out.innerHTML=head+cards+`<div class="card"><h2>🧪 เรื่องการทดสอบย้อนหลัง</h2><p class="meta" style="margin:0">รางวัลที่ 1 มี 1,000,000 ความเป็นไปได้ การเลือก 5 ชุดจึงมีโอกาสถูกเพียง 5 ใน 1,000,000 ไม่ว่าจะเลือกด้วยวิธีใด จึงทดสอบย้อนหลังแบบนับจำนวนครั้งที่ถูกไม่ได้ (ลองดูผลทดสอบย้อนหลังที่แท็บ "เลขท้าย 2 ตัว" แทน)</p></div>`;
+ },30);
+}
+document.querySelectorAll("#a-prize .sgb").forEach(b=>b.onclick=()=>{A5.prize=b.dataset.v;renderAnalysis()});
+document.querySelectorAll("#a-pm .sgb").forEach(b=>b.onclick=()=>{A5.pm=b.dataset.v;renderAnalysis()});
+document.querySelectorAll("#a-dm .sgb").forEach(b=>b.onclick=()=>{A5.dm=b.dataset.v;renderAnalysis()});
+$("a-rng").onchange=e=>{A5.range=e.target.value;renderAnalysis()};
+$("pre-hi").onclick=()=>{A5.pm="hi";A5.dm="hi";renderAnalysis()};
+$("pre-lo").onclick=()=>{A5.pm="lo";A5.dm="lo";renderAnalysis()};
+
+
+/* ---------- สถานะความใหม่ของข้อมูล ---------- */
+(function(){try{
+ const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Bangkok",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",hourCycle:"h23"}).formatToParts(new Date()).reduce((o,p)=>(o[p.type]=p.value,o),{});
+ const today=`${parts.year}-${parts.month}-${parts.day}`,hour=+parts.hour;
+ let exp=null;[`${parts.year}-${parts.month}-16`,`${parts.year}-${parts.month}-01`].forEach(c=>{if(!exp&&(c<today||(c===today&&hour>=17)))exp=c});
+ if(!exp){const pm=+parts.month===1?[+parts.year-1,12]:[+parts.year,+parts.month-1];exp=`${pm[0]}-${String(pm[1]).padStart(2,"0")}-16`}
+ const el=$("fresh");
+ if(DRAWS[0].id<exp){const [y,m,d]=exp.split("-").map(Number);
+  el.innerHTML=`⏳ ผลงวด ${d} ${TH_M[m-1]} ${y+543} ยังไม่อยู่ในระบบ · ระบบจะตรวจให้อัตโนมัติ (บางงวดเลื่อนเป็นวันที่ 2 หรือ 17 ตามวันหยุด) · ข้อมูลล่าสุดถึงงวด ${DRAWS[0].label}`;el.hidden=false}
+}catch(e){}})();
+if(h==="check"){render(DRAWS[0].id);showPage(2)}else if(h==="pattern"){render(DRAWS[0].id);showPage(3)}else if(h==="stats"){render(DRAWS[0].id);showPage(4)}else if(h==="analyze"){render(DRAWS[0].id);showPage(5)}else render(h||DRAWS[0].id);
+</script>
+</body>
+</html>
