@@ -1,0 +1,78 @@
+# ตรวจผลสลากงวดใหม่ + เผยแพร่เว็บขึ้น GitHub Pages
+# - ทำงานเองวันที่ 1-4 และ 16-19 ของเดือน วันละ 2 รอบ (16:00 และ 19:00 น. เวลาไทย) เผื่องวดที่เลื่อนเป็นวันที่ 2 หรือ 17
+# - กดรันเองได้: แท็บ Actions > "Update and Deploy" > ปุ่ม "Run workflow"
+# - ทุกครั้งที่อัปโหลดไฟล์ใหม่ขึ้น repository ก็จะเผยแพร่ใหม่ให้อัตโนมัติ
+name: Update and Deploy
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 9,12 1-4,16-19 * *"   # เวลา UTC (= 16:00 และ 19:00 น. เวลาไทย)
+  workflow_dispatch:
+    inputs:
+      manual_draw:
+        description: "(ไม่บังคับ) วางข้อมูลงวดใหม่แบบ JSON ในกรณีที่ระบบดึงอัตโนมัติไม่ได้"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: ตรวจผลงวดใหม่
+        if: github.event_name != 'push'
+        env:
+          MANUAL_DRAW: ${{ inputs.manual_draw }}
+        run: |
+          if [ -n "$MANUAL_DRAW" ]; then
+            printf '%s' "$MANUAL_DRAW" > manual_draw.json
+            python scripts/update_draws.py --draw-json manual_draw.json
+            rm -f manual_draw.json
+          else
+            python scripts/update_draws.py
+          fi
+
+      - name: บันทึกข้อมูลงวดใหม่ (ถ้ามี)
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "lotto-bot"
+          git config user.email "lotto-bot@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "ไม่มีงวดใหม่"
+          else
+            git commit -m "เพิ่มผลสลากงวดใหม่"
+            git push
+          fi
+
+      - name: เตรียมไฟล์เว็บ
+        run: |
+          mkdir _site
+          cp index.html _site/
+          cp -r data _site/data
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
