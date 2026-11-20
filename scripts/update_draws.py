@@ -17,7 +17,7 @@ import argparse, datetime, json, os, re, sys, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JSON_PATH = os.path.join(ROOT, "data", "draws.json")
 JS_PATH = os.path.join(ROOT, "data", "draws.js")
-SOURCE_URL = os.environ.get("LOTTO_SOURCE_URL", "https://lotto.api.rayriffy.com/latest")
+SOURCE_URL = os.environ.get("LOTTO_SOURCE_URL", "https://raw.githubusercontent.com/huayreview/thai-lottery-results/main/thai-lottery-results.json")
 
 TH_MONTHS = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
              "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
@@ -103,6 +103,27 @@ def validate(rec, last_date, today):
     return dt
 
 
+def parse_feed(obj):
+    """รับข้อมูลจากแหล่งใดก็ได้ แล้วคืนรายการงวด (รูปแบบของเรา)
+    - ไฟล์แบบ huayreview/ไฟล์ของเราเอง: มีคีย์ "draws" เป็นรายการงวด
+    - แบบ API เดิม (response.date / prizes / runningNumbers): มี 1 งวด"""
+    if isinstance(obj, dict) and isinstance(obj.get("draws"), list):
+        out = []
+        for d in obj["draws"]:
+            if not isinstance(d, dict) or "draw_date" not in d:
+                raise UpdateError("รูปแบบไฟล์แหล่งข้อมูลไม่ตรงที่คาดไว้ (ไม่พบ draw_date)")
+            rec = dict(d)
+            for k in SHAPE:
+                if isinstance(rec.get(k), list):
+                    rec[k] = sorted(str(n).strip() for n in rec[k])
+            rec.setdefault("glo_result_pdf", None)
+            out.append(rec)
+        if not out:
+            raise UpdateError("ไฟล์แหล่งข้อมูลไม่มีงวดเลย")
+        return out
+    return [parse_api(obj)]
+
+
 def fetch_source():
     req = urllib.request.Request(SOURCE_URL, headers={"User-Agent": "lotto-app-updater/1.0"})
     with urllib.request.urlopen(req, timeout=30) as resp:
@@ -147,6 +168,7 @@ def main(argv=None):
         write_js(); print("สร้าง data/draws.js ใหม่แล้ว"); return 0
     data = load_data()
     last = data["draws"][-1]["draw_date"]
+    have = {d["draw_date"] for d in data["draws"]}
     try:
         if a.draw_json:
             with open(a.draw_json, encoding="utf-8") as f:
@@ -159,26 +181,33 @@ def main(argv=None):
                 if isinstance(rec.get(k), list):
                     rec[k] = sorted(str(n).strip() for n in rec[k])
             rec.setdefault("glo_result_pdf", None)
+            recs = [rec]
         elif a.source_file:
             with open(a.source_file, encoding="utf-8") as f:
-                rec = parse_api(json.load(f))
+                recs = parse_feed(json.load(f))
         else:
-            rec = parse_api(fetch_source())
-        dt = validate(rec, last, bangkok_today())
+            recs = parse_feed(fetch_source())
+        recs.sort(key=lambda r: r["draw_date"])
+        new = [r for r in recs if r["draw_date"] > last and r["draw_date"] not in have]
+        for r in new:
+            validate(r, last, bangkok_today())
     except UpdateError as e:
         print("ข้อผิดพลาด: %s\nไม่ได้แก้ไขข้อมูลใดๆ" % e, file=sys.stderr); return 1
     except Exception as e:
         print("ดึงข้อมูลไม่สำเร็จ: %s: %s\nไม่ได้แก้ไขข้อมูลใดๆ" % (type(e).__name__, e), file=sys.stderr); return 1
-    if rec["draw_date"] in {d["draw_date"] for d in data["draws"]}:
-        print("งวด %s มีอยู่แล้ว ไม่ต้องอัปเดต (ล่าสุดในระบบ: %s)" % (rec["draw_date"], last)); return 0
-    if rec["draw_date"] < last:
-        print("แหล่งข้อมูลยังเป็นงวด %s ซึ่งเก่ากว่าที่มีอยู่ (%s) ไม่ต้องอัปเดต" % (rec["draw_date"], last)); return 0
+    if not new:
+        newest = recs[-1]["draw_date"]
+        print("ไม่มีงวดใหม่ (แหล่งข้อมูลล่าสุด: %s, ในระบบล่าสุด: %s)" % (newest, last)); return 0
     if a.dry_run:
-        print("[ทดลอง] จะเพิ่มงวด %s (ผลรางวัลที่ 1: %s)" % (rec["draw_date"], rec["first_prize"][0])); return 0
-    data["draws"].append(rec)
+        for r in new:
+            print("[ทดลอง] จะเพิ่มงวด %s (ผลรางวัลที่ 1: %s)" % (r["draw_date"], r["first_prize"][0]))
+        return 0
+    data["draws"].extend(new)
     save(data)
-    print("เพิ่มงวด %s แล้ว (ผลรางวัลที่ 1: %s, เลขท้าย 2 ตัว: %s) รวม %d งวด" % (
-        rec["draw_date"], rec["first_prize"][0], rec["last_two_digits"][0], len(data["draws"])))
+    for r in new:
+        print("เพิ่มงวด %s แล้ว (ผลรางวัลที่ 1: %s, เลขท้าย 2 ตัว: %s)" % (
+            r["draw_date"], r["first_prize"][0], r["last_two_digits"][0]))
+    print("รวม %d งวด" % len(data["draws"]))
     return 0
 
 
