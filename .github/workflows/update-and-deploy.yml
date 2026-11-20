@@ -39,6 +39,8 @@ jobs:
           python-version: "3.12"
 
       - name: ตรวจผลงวดใหม่
+        id: update
+        continue-on-error: true   # ดึงข้อมูลไม่ได้ก็ยังเผยแพร่เว็บต่อ (ใช้ข้อมูลเดิม)
         if: github.event_name != 'push'
         env:
           MANUAL_DRAW: ${{ inputs.manual_draw }}
@@ -50,6 +52,10 @@ jobs:
           else
             python scripts/update_draws.py
           fi
+
+      - name: แจ้งเตือนถ้าดึงข้อมูลไม่ได้
+        if: steps.update.outcome == 'failure'
+        run: echo "::warning::ดึงผลงวดใหม่ไม่สำเร็จ ดูรายละเอียดในขั้นตอน 'ตรวจผลงวดใหม่' เว็บยังเผยแพร่ด้วยข้อมูลเดิม"
 
       - name: บันทึกข้อมูลงวดใหม่ (ถ้ามี)
         if: github.event_name != 'push'
