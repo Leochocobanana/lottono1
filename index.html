@@ -294,7 +294,18 @@ function renderStats(){
 document.querySelectorAll(".segb").forEach(b=>b.onclick=()=>{st.prize=b.dataset.v;st.pos=0;renderStats()});
 $("rng").onchange=e=>{st.range=e.target.value;renderStats()};
 renderStats();
-const P3=DRAWS.map((d,i)=>{const pv=i<DRAWS.length-1?DRAWS[i+1].p1:PREV_OLDEST;return {d,s:d.p1,pv,m:PAT.filter(p=>p.f(d.p1,pv,d)).map(p=>p.k)}});
+/* เลขรางวัลที่ 1-5 ของทุกงวด (ไม่นับรางวัลข้างเคียง/เลขหน้า 3/ท้าย 3/ท้าย 2) ใช้ดูว่าเลขรางวัลที่ 1 เคยถูกมาก่อนไหม */
+const HIT=new Map();
+DRAWS.forEach((d,j)=>[[1,[d.p1]],[2,d.p2],[3,d.p3],[4,d.p4],[5,d.p5]].forEach(([pz,arr])=>arr.forEach(n=>{let l=HIT.get(n);if(!l){l=[];HIT.set(n,l)}l.push({j,pz})})));
+const earlierHits=(s,i)=>(HIT.get(s)||[]).filter(h=>h.j>i).sort((a,b)=>a.j-b.j);/* j น้อย = ใหม่กว่า */
+const expSeen=q=>{let t=0;for(let i=0;i<DRAWS.length;i++)t+=1-Math.pow(1-q,DRAWS.length-1-i);return t/DRAWS.length*100};
+const HPAT=[
+ {g:"เคยถูกรางวัลมาก่อนไหม (นับเฉพาะรางวัลที่ 1-5 ของงวดก่อนหน้า)",k:"seen",t:"เคยถูกรางวัลที่ 1-5 มาก่อน",e:expSeen(166e-6),f:(s,pv,d,i)=>earlierHits(s,i).length>0},
+ {k:"seen1",t:"เคยเป็นรางวัลที่ 1 มาก่อน",e:expSeen(1e-6),f:(s,pv,d,i)=>earlierHits(s,i).some(h=>h.pz===1)}
+];
+const ALLP=PAT.concat(HPAT);
+const fmtE=e=>e>=1?e.toFixed(1):e>=0.1?e.toFixed(2):e.toFixed(3);
+const P3=DRAWS.map((d,i)=>{const pv=i<DRAWS.length-1?DRAWS[i+1].p1:PREV_OLDEST;return {d,s:d.p1,pv,i,m:ALLP.filter(p=>p.f(d.p1,pv,d,i)).map(p=>p.k)}});
 let pfil="all",pshow=30;
 function digitsHTML(s,pv){
  const c=cnts(s),order=[],rn=new Set();
@@ -323,6 +334,7 @@ function badgesHTML(s,m,pv,d){
  if(pos.length)b.push(`<span class="bd">ตรงงวดก่อน ตำแหน่ง ${pos.join(", ")}</span>`);
  if(m.includes("pl2"))b.push(`<span class="bd">มีท้าย 2 ตัวงวดก่อน (${pv.slice(4)})</span>`);
  if(m.includes("sl2"))b.push(`<span class="bd">ตรงเลขท้าย 2 ตัวงวดนี้ (${d.l2})</span>`);
+ if(m.includes("seen")){const hs=earlierHits(s,DRAWS.indexOf(d));hs.slice(0,3).forEach(h=>b.push(`<span class="bd u">เคยถูกรางวัลที่ ${h.pz} · ${shortDate(DRAWS[h.j].label)}</span>`));if(hs.length>3)b.push(`<span class="bd u">…และอีก ${hs.length-3} ครั้ง</span>`)}
  return b.join("");
 }
 const shortDate=l=>l.replace("มกราคม","ม.ค.").replace("กุมภาพันธ์","ก.พ.").replace("มีนาคม","มี.ค.").replace("เมษายน","เม.ย.").replace("พฤษภาคม","พ.ค.").replace("มิถุนายน","มิ.ย.").replace("กรกฎาคม","ก.ค.").replace("สิงหาคม","ส.ค.").replace("กันยายน","ก.ย.").replace("ตุลาคม","ต.ค.").replace("พฤศจิกายน","พ.ย.").replace("ธันวาคม","ธ.ค.");
@@ -330,7 +342,7 @@ function renderP3(){
  const N=P3.length;
  const tile=(k,t,n,sub)=>`<button class="ptile${pfil===k?" on":""}" data-k="${k}"><b>${t}</b><div class="v">${n}<span style="font-size:.78rem;font-weight:400"> งวด</span></div><small>${sub}</small></button>`;
  $("ptiles").innerHTML=tile("all","ทุกงวด",N,`${DRAWS[N-1].label.split(" ").pop()}–${DRAWS[0].label.split(" ").pop()}`)+
-  PAT.map(p=>{const n=P3.filter(x=>x.m.includes(p.k)).length;const den=(p.k==="pp"||p.k==="pl2")?N-1:N;return (p.g?`<div class="pgh">${p.g}</div>`:"")+tile(p.k,p.t,n,`${(n/den*100).toFixed(1)}% · สุ่มคาด ${p.e<1?p.e:p.e.toFixed(1)}%`)}).join("");
+  ALLP.map(p=>{const n=P3.filter(x=>x.m.includes(p.k)).length;const den=(p.k==="pp"||p.k==="pl2")?N-1:N;return (p.g?`<div class="pgh">${p.g}</div>`:"")+tile(p.k,p.t,n,`${(n/den*100).toFixed(1)}% · สุ่มคาด ${fmtE(p.e)}%`)}).join("");
  $("ptiles").querySelectorAll(".ptile").forEach(b=>b.onclick=()=>{pfil=b.dataset.k;pshow=30;renderP3();$("plist").scrollIntoView({block:"start",behavior:"smooth"})});
  const rows=P3.filter(x=>pfil==="all"||x.m.includes(pfil));
  $("plist").innerHTML=rows.slice(0,pshow).map(x=>`<div class="prow"><div class="pd">🗓️ ${x.d.day}ที่ ${shortDate(x.d.label)}</div><div class="pn">${digitsHTML(x.s,x.pv)}</div><div class="pb">${badgesHTML(x.s,x.m,x.pv,x.d)}</div></div>`).join("")||`<div class="card empty"><div style="font-size:2.4rem">🌱</div>ยังไม่เคยเกิดแพทเทิร์นนี้ใน ${N} งวดที่มีข้อมูล</div>`;
